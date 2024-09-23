@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://ck8tfqe0wvd55"]
+
+[ext_resource type="Script" path="res://nave_enemiga_1.gd" id="1_psk1m"]
+[ext_resource type="Texture2D" uid="uid://cvplt2k6hd5it" path="res://spaceShips_001.png" id="2_bjbtj"]
+
+[node name="RigidBody2D" type="RigidBody2D"]
+script = ExtResource("1_psk1m")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(18.7, 20.9415)
+scale = Vector2(0.146465, 0.173846)
+texture = ExtResource("2_bjbtj")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+scale = Vector2(1.20589, 0.456493)
+polygon = PackedVector2Array(4.31218, 32.8592, 8.29265, 67.909, 11.1121, 67.909, 11.1121, 79.7383, 17.9121, 82.8051, 19.9024, 66.1565, 22.2243, 66.1565, 27.6974, 14.458, 22.3901, 10.9531, 17.7463, 19.7155, 16.0877, 8.76245, 12.439, 11.3912, 12.439, 22.7824, 6.96583, 12.7056, 3.15121, 12.7056)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

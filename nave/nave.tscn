@@ -1,0 +1,95 @@
+[gd_scene load_steps=8 format=3 uid="uid://c6n6yhe03whsk"]
+
+[ext_resource type="Script" path="res://nave.gd" id="1_yrdrr"]
+[ext_resource type="Texture2D" uid="uid://b2ahc8q385bkg" path="res://sprites/naves/spaceShips_004.png" id="2_rb8oa"]
+[ext_resource type="Texture2D" uid="uid://du2p7ek0lrsop" path="res://Enemy Explosion Sprite Sheet.png" id="3_kjyj8"]
+
+[sub_resource type="Animation" id="Animation_d4u6c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_61i0u"]
+resource_name = "explosion"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 1, 2, 3, 4, 5, 6, 7, 7]
+}
+
+[sub_resource type="Animation" id="Animation_sat0n"]
+resource_name = "ide"
+loop_mode = 2
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_rb8oa")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i454a"]
+_data = {
+"RESET": SubResource("Animation_d4u6c"),
+"explosion": SubResource("Animation_61i0u"),
+"ide": SubResource("Animation_sat0n")
+}
+
+[node name="nave" type="CharacterBody2D" groups=["nave"]]
+position = Vector2(583, 540)
+script = ExtResource("1_yrdrr")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["nave"]]
+position = Vector2(2.14577e-06, 21)
+scale = Vector2(0.68254, 0.657407)
+texture = ExtResource("2_rb8oa")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(5.00002, 20)
+scale = Vector2(0.690789, 0.625)
+polygon = PackedVector2Array(-50, -39, -50, -55, -34, -59, -30, -38, -21, -33, -8, -45, 8, -33, 21, -36, 23, -55, 39, -57, 42, -36, 53, -28, 55, -14, 61, 11, 55, 33, 36, 52, 29, 52, 18, 56, 11, 52, 15, 31, 12, 20, 2, 30, -27, 21, -21, 31, -24, 47, -27, 57, -44, 57, -72, 24, -66, -13, -61, -32)
+
+[node name="Area2D" type="Area2D" parent="." groups=["nave"]]
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Area2D"]
+position = Vector2(5.00002, 20)
+scale = Vector2(0.690789, 0.625)
+polygon = PackedVector2Array(-50, -39, -50, -55, -34, -59, -30, -38, -21, -33, -8, -45, 8, -33, 21, -36, 23, -55, 39, -57, 42, -36, 53, -28, 55, -14, 61, 11, 55, 33, 36, 52, 29, 52, 18, 56, 11, 52, 15, 31, 12, 20, 2, 30, -27, 21, -21, 31, -24, 47, -27, 57, -44, 57, -72, 24, -66, -13, -61, -32)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_i454a")
+}
+autoplay = "ide"
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(-583, -540)
+texture = ExtResource("3_kjyj8")
+hframes = 8
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

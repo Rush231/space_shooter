@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbe25oow4w3jt"]
+
+[ext_resource type="Texture2D" uid="uid://tihsf8g8q18j" path="res://sprites/menu/Table.png" id="1_gvc83"]
+[ext_resource type="Script" path="res://puntos.gd" id="2_mo57p"]
+
+[node name="Puntuacion" type="TextureRect"]
+offset_left = -1.0
+offset_top = 1.0
+offset_right = 173.0
+offset_bottom = 38.0
+texture = ExtResource("1_gvc83")
+expand_mode = 1
+script = ExtResource("2_mo57p")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 1.0
+offset_right = 125.0
+offset_bottom = 24.0
+scale = Vector2(1.30051, 1.39682)
+text = "Score: "
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]

@@ -1,0 +1,95 @@
+[gd_scene load_steps=9 format=3 uid="uid://c4qxakedragod"]
+
+[ext_resource type="Script" path="res://animacion.gd" id="1_f2uht"]
+[ext_resource type="PackedScene" uid="uid://ddhljh00hb8ll" path="res://fondo.tscn" id="1_gi5qv"]
+[ext_resource type="Texture2D" uid="uid://b2ahc8q385bkg" path="res://sprites/naves/spaceShips_004.png" id="2_ba7v5"]
+[ext_resource type="Texture2D" uid="uid://dljadqd115njh" path="res://sprites/menu/Header.png" id="3_mowi8"]
+[ext_resource type="AudioStream" uid="uid://eaohvmx6mm88" path="res://sonidos/8-bit-space-123218.mp3" id="5_x1v8j"]
+
+[sub_resource type="Animation" id="Animation_cbnno"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(480, 538)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-420, 300)]
+}
+
+[sub_resource type="Animation" id="Animation_5mwkl"]
+resource_name = "pasar de nivel"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(480, 538), Vector2(515, -103)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5, 0.633333, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-420, 300), Vector2(300, 300), Vector2(300, 300), Vector2(300, 300), Vector2(1500, 300)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jk8sh"]
+_data = {
+"RESET": SubResource("Animation_cbnno"),
+"pasar de nivel": SubResource("Animation_5mwkl")
+}
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_f2uht")
+
+[node name="Fondo" parent="." instance=ExtResource("1_gi5qv")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jk8sh")
+}
+autoplay = "pasar de nivel"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(480, 538)
+scale = Vector2(0.68254, 0.657407)
+texture = ExtResource("2_ba7v5")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -420.0
+offset_top = 300.0
+offset_right = -21.0
+offset_bottom = 359.0
+texture = ExtResource("3_mowi8")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_x1v8j")
+volume_db = -0.035
+autoplay = true

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2d0dk5qgnqyy"]
+
+[ext_resource type="Script" path="res://hud.gd" id="1_f3pic"]
+[ext_resource type="PackedScene" uid="uid://cbe25oow4w3jt" path="res://score.tscn" id="1_swtww"]
+[ext_resource type="Script" path="res://label_2.gd" id="3_o8ftx"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_f3pic")
+
+[node name="Puntuacion" parent="." instance=ExtResource("1_swtww")]
+
+[node name="Label2" type="Label" parent="Puntuacion"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 1.0
+offset_right = 125.0
+offset_bottom = 24.0
+scale = Vector2(1.30051, 1.39682)
+text = "Score: 0"
+script = ExtResource("3_o8ftx")

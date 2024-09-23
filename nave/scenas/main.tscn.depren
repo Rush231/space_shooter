@@ -1,0 +1,97 @@
+[gd_scene load_steps=13 format=3 uid="uid://bxujswgrkyeqp"]
+
+[ext_resource type="PackedScene" uid="uid://c6n6yhe03whsk" path="res://scenas/nave.tscn" id="1_1n3n5"]
+[ext_resource type="Script" path="res://main.gd" id="1_l7umx"]
+[ext_resource type="PackedScene" uid="uid://ddhljh00hb8ll" path="res://fondo.tscn" id="2_xsa1i"]
+[ext_resource type="Script" path="res://spawn_!.gd" id="3_30ec8"]
+[ext_resource type="PackedScene" uid="uid://dggbojsjn8b68" path="res://menu.tscn" id="4_ilt2p"]
+[ext_resource type="PackedScene" uid="uid://c2d0dk5qgnqyy" path="res://hud.tscn" id="7_h780i"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_la3um"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a4gqs"]
+size = Vector2(18, 562.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_343y8"]
+size = Vector2(20, 558)
+
+[sub_resource type="Animation" id="Animation_fig5i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -32)]
+}
+
+[sub_resource type="Animation" id="Animation_oy305"]
+resource_name = "move"
+length = 6.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3, 6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -32), Vector2(720, -32), Vector2(800, -32)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7np8l"]
+_data = {
+"RESET": SubResource("Animation_fig5i"),
+"move": SubResource("Animation_oy305")
+}
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_l7umx")
+
+[node name="nave" parent="." instance=ExtResource("1_1n3n5")]
+position = Vector2(544, 545)
+
+[node name="pared1" type="StaticBody2D" parent="." groups=["nave"]]
+position = Vector2(-8, 1)
+physics_material_override = SubResource("PhysicsMaterial_la3um")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pared1"]
+position = Vector2(196, 368)
+shape = SubResource("RectangleShape2D_a4gqs")
+
+[node name="pared2" type="StaticBody2D" parent="."]
+position = Vector2(-5, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pared2"]
+position = Vector2(905, 356)
+shape = SubResource("RectangleShape2D_343y8")
+
+[node name="Fondo" parent="." instance=ExtResource("2_xsa1i")]
+
+[node name="spawn_!" type="Marker2D" parent="."]
+position = Vector2(0, -32)
+script = ExtResource("3_30ec8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="spawn_!"]
+libraries = {
+"": SubResource("AnimationLibrary_7np8l")
+}
+autoplay = "move"
+
+[node name="menu" parent="." instance=ExtResource("4_ilt2p")]
+
+[node name="HUD" parent="." instance=ExtResource("7_h780i")]
+
+[connection signal="Exit" from="menu" to="." method="_on_menu_exit"]
+[connection signal="Exit" from="menu" to="nave" method="_on_menu_exit"]
+[connection signal="Play" from="menu" to="." method="_on_menu_play"]
+[connection signal="Play_again" from="menu" to="." method="_on_menu_play_again"]
+[connection signal="Play_again" from="menu" to="nave" method="_on_menu_play_again"]

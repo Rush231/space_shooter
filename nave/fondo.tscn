@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddhljh00hb8ll"]
+
+[ext_resource type="Texture2D" uid="uid://bw0vap6vrsrqd" path="res://sprites/Fondo.png" id="1_nss51"]
+
+[sub_resource type="Shader" id="Shader_igup8"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's CanvasItemMaterial.
+
+shader_type canvas_item;
+render_mode blend_mix;
+
+uniform float scroll_speed;
+void fragment(){
+	vec2 shifteduv = UV;
+	shifteduv.y -= TIME * scroll_speed;
+	vec4 color = texture(TEXTURE, shifteduv);
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_347yr"]
+shader = SubResource("Shader_igup8")
+shader_parameter/scroll_speed = 0.5
+
+[node name="Fondo" type="ParallaxBackground"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_347yr")
+position = Vector2(350.5, 236.5)
+scale = Vector2(2.05497, 2.32105)
+texture = ExtResource("1_nss51")
